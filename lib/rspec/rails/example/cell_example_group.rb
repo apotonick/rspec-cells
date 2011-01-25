@@ -18,9 +18,14 @@ module RSpec::Rails
 
     capybara do
       include Capybara
+      begin
+        include Capybara::RSpec::StringMatchers
+      rescue NameError
+        # Read more in the source file
+        require 'rspec_cells/capybara/string_matchers'
+        include RSpecCells::Capybara::StringMatchers
+      end
     end
-
-
 
     module InstanceMethods
       attr_reader :controller, :routes
