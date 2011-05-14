@@ -7,21 +7,35 @@ module RSpec::Rails
     include RSpec::Rails::RailsExampleGroup
     include Cell::TestCase::TestMethods
     include RSpec::Rails::ViewRendering
-    include RSpec::Rails::BrowserSimulators
 
-    webrat do
+    if defined?(Webrat)
       include Webrat::Matchers
       include Webrat::Methods
     end
 
-    capybara do
-      include Capybara
+    if defined?(Capybara)
       begin
-        include Capybara::RSpec::StringMatchers
+        include Capybara::DSL
       rescue NameError
-        # do this till capybara 0.4.2 is out.
-        require 'rspec/cells/capybara/string_matchers'
-        include RSpec::Cells::Capybara::StringMatchers
+        include Capybara
+      end
+
+      # Overwrite to wrap render_cell into a Capybara custom string with a
+      # lot of matchers.
+      #
+      # Read more at:
+      #
+      # The Capybara.string method documentation:
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara#string-class_method
+      #
+      # Return value is an instance of Capybara::Node::Simple
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Simple
+      #
+      # That expose all the methods from the following capybara modules:
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders
+      def render_cell(*args)
+        Capybara.string super
       end
     end
 
@@ -41,7 +55,7 @@ module RSpec::Rails
       render_views
       subject { controller }
     end
-    
+
     RSpec.configure do |c|
       c.include self, :example_group => { :file_path => /spec\/cells/ }
     end
