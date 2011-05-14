@@ -7,14 +7,13 @@ module RSpec::Rails
     include RSpec::Rails::RailsExampleGroup
     include Cell::TestCase::TestMethods
     include RSpec::Rails::ViewRendering
-    include RSpec::Rails::BrowserSimulators
 
-    webrat do
+    if defined?(Webrat)
       include Webrat::Matchers
       include Webrat::Methods
     end
 
-    capybara do
+    if defined?(Capybara)
       include Capybara
       begin
         include Capybara::RSpec::StringMatchers
@@ -41,7 +40,7 @@ module RSpec::Rails
       render_views
       subject { controller }
     end
-    
+
     RSpec.configure do |c|
       c.include self, :example_group => { :file_path => /spec\/cells/ }
     end
