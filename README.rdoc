@@ -17,7 +17,7 @@ This gem runs with RSpec2 and Rails 3.0, so just add it to your app's +Gemfile+.
 = Usage
 
 Simply put all your specs in the <tt>spec/cells</tt> directory. However, let the cell generator do that for you!
-  
+
   rails g cell blog_post show -t rspec
 
 will create an exemplary <tt>spec/cells/blog_post_cell_spec.rb</tt> for you.
@@ -40,13 +40,32 @@ If you want Capybara's string matchers be sure to bundle at least capybara +0.4.
 
 You can then use capybara's matchers in your cell spec.
 
- describe PostsCell do
-    it "should render the posts count" do
-      render_cell(:posts, :box).should have_css("div#widget h3")
+  describe PostsCell do
+    describe "search posts" do
+      let(:search) { render_cell(:posts, :search) }
+
+      it "should have a search field" do
+        search.should have_field("Search by Title")
+      end
+
+      it "should have a search button" do
+        search.should have_button("Search")
+      end
+    end
+
+    describe "latest posts" do
+      subject { render_cell(:posts, :latest) }
+
+      it { should have_css("h3.title", :text => "Latest Posts") }
+      it { should have_table("latest_posts") }
+      it { should have_link("View all Posts") }
+      it { should_not have_button("Create Post") }
+      it { should_not have_field("Search by Title") }
     end
   end
 
-  
+  You can see all capybara matchers and finders here: http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Simple
+
 == Running the specs
 
 Run your examples with
