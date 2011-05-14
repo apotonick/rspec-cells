@@ -14,9 +14,9 @@ module RSpec::Rails
     end
 
     if defined?(Capybara)
-      if defined?(Capybara::DSL)
+      begin
         include Capybara::DSL
-      else
+      rescue NameError
         include Capybara
       end
 
