@@ -14,13 +14,28 @@ module RSpec::Rails
     end
 
     if defined?(Capybara)
-      include Capybara
-      begin
-        include Capybara::RSpec::StringMatchers
-      rescue NameError
-        # do this till capybara 0.4.2 is out.
-        require 'rspec/cells/capybara/string_matchers'
-        include RSpec::Cells::Capybara::StringMatchers
+      if defined?(Capybara::DSL)
+        include Capybara::DSL
+      else
+        include Capybara
+      end
+
+      # Overwrite to wrap render_cell into a Capybara custom string with a
+      # lot of matchers.
+      #
+      # Read more at:
+      #
+      # The Capybara.string method documentation:
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara#string-class_method
+      #
+      # Return value is an instance of Capybara::Node::Simple
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Simple
+      #
+      # That expose all the methods from the following capybara modules:
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers
+      #   - http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders
+      def render_cell(*args)
+        Capybara.string super
       end
     end
 
