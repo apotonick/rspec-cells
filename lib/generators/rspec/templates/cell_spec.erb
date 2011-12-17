@@ -16,7 +16,7 @@ describe <%= class_name %>Cell do
   context "cell instance" do 
     subject { cell(:<%= file_name %>) } 
     <% for state in actions %>
-      it { should respond_to(:<%= state %>) }
+    it { should respond_to(:<%= state %>) }
     <% end %>
   end
 end
