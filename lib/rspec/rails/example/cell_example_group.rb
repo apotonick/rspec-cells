@@ -39,16 +39,14 @@ module RSpec::Rails
       end
     end
 
-    module InstanceMethods
-      attr_reader :controller, :routes
+    attr_reader :controller, :routes
 
-      def method_missing(method, *args, &block)
-        # Send the route helpers to the application router.
-        if @routes && @routes.named_routes.helpers.include?(method)
-          @controller.send(method, *args, &block)
-        else
-          super
-        end
+    def method_missing(method, *args, &block)
+      # Send the route helpers to the application router.
+      if @routes && @routes.named_routes.helpers.include?(method)
+        @controller.send(method, *args, &block)
+      else
+        super
       end
     end
 
