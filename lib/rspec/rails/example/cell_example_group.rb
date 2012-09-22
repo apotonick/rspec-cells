@@ -2,7 +2,6 @@ module RSpec::Rails
   # Lets you call #render_cell in Rspec2. Move your cell specs to <tt>spec/cells/</tt>.
   module CellExampleGroup
     extend ActiveSupport::Concern
-    extend RSpec::Rails::ModuleInclusion
 
     include RSpec::Rails::RailsExampleGroup
     include Cell::TestCase::TestMethods
@@ -61,10 +60,9 @@ module RSpec::Rails
       # we always render views in rspec-cells, so turn it on.
       subject { controller }
     end
-
-    RSpec.configure do |c|
-      c.include self, :example_group => { :file_path => /spec\/cells/ }
-    end
-
   end
+end
+
+RSpec.configure do |c|
+  c.include RSpec::Rails::CellExampleGroup, :example_group => { :file_path => /spec\/cells/ }
 end
