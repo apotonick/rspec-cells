@@ -1,22 +1,32 @@
 require 'spec_helper'
 
 describe <%= class_name %>Cell do
-  context "cell rendering" do 
-    <% for state in actions %>
+
+  context "cell instance" do
+    subject { cell(:<%= file_name %>) }
+
+    <%- for state in actions -%>
+    it { should respond_to(:<%= state %>) }
+    <%- end -%>
+  end
+
+  context "cell rendering" do
+  <%- actions.each_with_index do |state, index| -%>
     context "rendering <%= state %>" do
       subject { render_cell(:<%= file_name %>, :<%= state %>) }
-  
+
+      <%- if defined?(Capybara) -%>
+      it { should have_selector("h1", :text => "<%= class_name %>#<%= state %>") }
+      it { should have_selector("p", :text => "Find me in app/cells/<%= file_name %>/<%= state %>.html") }
+      <%- else -%>
       it { should have_selector("h1", :content => "<%= class_name %>#<%= state %>") }
       it { should have_selector("p", :content => "Find me in app/cells/<%= file_name %>/<%= state %>.html") }
+      <%- end -%>
     end
-    <% end %>
+    <%- unless index == actions.length - 1 -%>
+
+    <%- end -%>
+  <%- end -%>
   end
 
-
-  context "cell instance" do 
-    subject { cell(:<%= file_name %>) } 
-    <% for state in actions %>
-    it { should respond_to(:<%= state %>) }
-    <% end %>
-  end
 end
