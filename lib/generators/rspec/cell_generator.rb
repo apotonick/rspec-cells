@@ -1,5 +1,8 @@
 require 'generators/cells/base'
 
+# ensure that we can see the test-libraries like Capybara
+Bundler.require :test if Bundler
+
 module Rspec
   module Generators
     class CellGenerator < ::Cells::Generators::Base
