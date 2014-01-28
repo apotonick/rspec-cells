@@ -48,8 +48,10 @@ After preparing the instance you can use +render_state+ for triggering the state
 
 If you want Capybara's string matchers be sure to bundle at least capybara +0.4.1+ in your Gemfile.
 
-  gem "capybara", "~> 0.4.1"
-
+  group :development, :test do
+    gem "capybara", "~> 0.4.1"
+  end
+  
 You can then use capybara's matchers in your cell spec.
 
   describe PostsCell do
