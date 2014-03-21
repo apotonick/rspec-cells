@@ -5,6 +5,7 @@ require 'bundler/setup'
 require "rails/all"
 require 'rspec-cells'
 require 'rspec/rails'
+require 'cell/base'
 require 'cell/test_case'
 require 'rspec/rails/example/cell_example_group'
 

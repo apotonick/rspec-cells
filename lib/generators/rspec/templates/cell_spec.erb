@@ -19,8 +19,8 @@ describe <%= class_name %>Cell do
       it { should have_selector("h1", :text => "<%= class_name %>#<%= state %>") }
       it { should have_selector("p", :text => "Find me in app/cells/<%= file_path %>/<%= state %>.html") }
       <%- else -%>
-      it { should have_selector("h1", :content => "<%= class_name %>#<%= state %>") }
-      it { should have_selector("p", :content => "Find me in app/cells/<%= file_path %>/<%= state %>.html") }
+      it { should include "<%= class_name %>#<%= state %>" }
+      it { should include "Find me in app/cells/<%= file_path %>/<%= state %>.html" }
       <%- end -%>
     end
     <%- unless index == actions.length - 1 -%>
