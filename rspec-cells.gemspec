@@ -21,6 +21,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency(%q<railties>, ['>= 3.0', '< 4.1'])
-  s.add_runtime_dependency(%q<rspec-rails>, ["~> 2.2"])
-  s.add_runtime_dependency(%q<cells>, ["~> 3.4"])
+  s.add_runtime_dependency(%q<rspec-rails>)
+  s.add_runtime_dependency(%q<cells>)
 end
