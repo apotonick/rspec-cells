@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
-gem "railties"
 gem "appraisal"
-gem "rspec-rails", "~> 2.14.0"
+gem "byebug"
+gem "rspec-rails", "~> 2.99.0"
 
 gemspec :path => "../"

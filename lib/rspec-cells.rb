@@ -1,13 +1,13 @@
-require 'rails/railtie'
-module RSpec
-  module Cells
-    class Railtie < ::Rails::Railtie
-      rake_tasks do
-        load "rspec/cells/tasks.rake"
-      end
-
-      initializer 'cells.rspec' do |app|
-        require 'rspec/cells'
+begin
+  require 'rails/railtie'
+rescue LoadError
+else
+  module RSpec
+    module Cells
+      class Railtie < ::Rails::Railtie
+        rake_tasks do
+          load 'rspec/cells/tasks.rake'
+        end
       end
     end
   end

@@ -22,4 +22,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "railties",    ">= 3.0"
   s.add_runtime_dependency 'rspec-rails', '>= 2.14'
   s.add_runtime_dependency "cells",       ">= 3.4.0"
+  s.add_runtime_dependency 'capybara', '>= 2.4.0'
+  s.add_development_dependency 'ammeter',  '1.1.1'
 end

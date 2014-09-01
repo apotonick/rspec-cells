@@ -1,0 +1,17 @@
+require 'rails_helper'
+
+<% module_namespacing do -%>
+RSpec.describe <%= class_name %>Cell, type: :cell do
+  context 'cell rendering' do
+  <%- actions.each do |state| -%>
+
+    context 'rendering <%= state %>' do
+      subject { render_state(:<%= state %>) }
+
+      it { is_expected.to have_selector('h1', text: '<%= class_name %>Cell#<%= state %>') }
+      it { is_expected.to have_selector('p', text: 'Find me in app/cells/<%= file_path %>/<%= state %>.html') }
+    end
+  <%- end -%>
+  end
+end
+<% end -%>

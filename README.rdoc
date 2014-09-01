@@ -10,11 +10,17 @@ Cells is Rails' popular {view components framework}[http://github.com/apotonick/
 
 = Installation
 
-This gem runs with RSpec2 and Rails >= 3.x, so just add it to your app's +Gemfile+.
+This gem runs with RSpec2+ and Rails 3+.
+
+  # Gemfile
 
   group :development, :test do
     gem "rspec-cells"
   end
+
+  # rails_helper.rb
+
+  require 'rspec/cells'
 
 = Usage
 
@@ -28,53 +34,9 @@ will create an exemplary <tt>spec/cells/blog_post_cell_spec.rb</tt> for you.
 
 == API
 
-=== Old API
-
-In your specs you can use +render_cell+ to assert the rendered markup (or whatever your state is supposed to do). This goes fine with Webrat matchers.
-
-  it "renders posts count" do
-    expect(render_cell(:posts, :count)).to have_selector("p", :content => "4 posts!")
-  end
-
-You can create a cell instance using the +cell+ method, and then render afterwards. This is helpful when you're planning to stub things or if you need to pass arguments to the cell constructor.
-
-  it "renders empty posts list" do
-    posts = cell(:posts)
-    posts.stub(:recent_posts).and_return([])
-
-    expect(posts.render_state(:count)).to have_selector("p", :content => "No posts!")
-  end
-
-After preparing the instance you can use +render_state+ for triggering the state.
-
-
-=== View Models
-
-With the introduction of cells [view models](https://github.com/apotonick/cells#view-models) you get a slightly different API for your specs (which is identical to your app's one).
-
-  it "renders empty posts list" do
-    expect(cell(:posts).count.to be_zero
-  end
-
-It's pretty simple, you use `#cell` to instantiate a view model instance and then call the state method on it.
-
-
-== Capybara
-
-If you want Capybara's string matchers be sure to bundle at least capybara +0.4.1+ in your Gemfile.
-
-  group :development, :test do
-    gem "capybara", "~> 0.4.1"
-  end
-
-In order to make the cells test generator work properly, capybara needs to be in both groups.
-
-
-You can then use capybara's matchers in your cell spec.
-
-  describe PostsCell do
+describe PostsCell do
     describe "search posts" do
-      let(:search) { render_cell(:posts, :search) }
+      let(:search) { render_state(:search) }
 
       it "should have a search field" do
         expect(search).to have_field("Search by Title")
@@ -86,7 +48,7 @@ You can then use capybara's matchers in your cell spec.
     end
 
     describe "latest posts" do
-      subject { render_cell(:posts, :latest) }
+      subject { render_state(:latest) }
 
       it { is_expected.to have_css("h3.title", :text => "Latest Posts") }
       it { is_expected.to have_table("latest_posts") }
@@ -124,7 +86,6 @@ Here is an example:
 
 * Jorge Calás Lozano <calas@qvitta.net> (Cleanup, capybara string matchers)
 * Abdelkader Boudih <@seuros>
-*
 
 == LICENSE
 

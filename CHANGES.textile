@@ -1,3 +1,7 @@
+h1. 0.3.0
+
+Full rewrite!
+
 h2. 0.2.2
 
 * Allow using `cell.stub(..)` with capybara.
