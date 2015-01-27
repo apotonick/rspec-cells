@@ -53,7 +53,7 @@ After preparing the instance you can use +render_state+ for triggering the state
 With the introduction of cells [view models](https://github.com/apotonick/cells#view-models) you get a slightly different API for your specs (which is identical to your app's one).
 
   it "renders empty posts list" do
-    expect(cell(:posts).count.to be_zero
+    expect(cell(:posts)).count.to be_zero
   end
 
 It's pretty simple, you use `#cell` to instantiate a view model instance and then call the state method on it.
