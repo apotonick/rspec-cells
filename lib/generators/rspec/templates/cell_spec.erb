@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-Rails.describe <%= class_name %>Cell, type: :cell do
+Rspec.describe <%= class_name %>Cell, type: :cell do
 
   context 'cell rendering' do
   <%- actions.each_with_index do |state, index| -%>
