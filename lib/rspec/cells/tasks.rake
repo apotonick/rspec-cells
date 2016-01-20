@@ -6,4 +6,10 @@ namespace :spec do
     t.pattern = "./spec/cells/**/*_spec.rb"
     t.rspec_opts = '--tag cell'
   end
+
+  desc "Run the code examples in spec/concepts"
+  RSpec::Core::RakeTask.new("concepts") do |t|
+    t.pattern = "./spec/concepts/**/*_spec.rb"
+    t.rspec_opts = '--tag cell'
+  end
 end

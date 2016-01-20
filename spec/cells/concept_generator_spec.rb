@@ -31,7 +31,7 @@ describe Rspec::Generators::ConceptGenerator do
 
     it "creates widget spec" do
       test.assert_file "spec/concepts/twitter_concept_spec.rb", t("require 'rails_helper'")
-      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('RSpec.describe Twitter::Cell, type: :concept do')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('RSpec.describe Twitter::Cell, type: :cell do')
       test.assert_file "spec/concepts/twitter_concept_spec.rb", t('context \'concept rendering\' do')
       test.assert_file "spec/concepts/twitter_concept_spec.rb", t('end')
     end
@@ -98,29 +98,30 @@ describe Rspec::Generators::ConceptGenerator do
       FileUtils.rm_rf(CONCEPT_DESTINATION_ROOT) # Cleanup after we are done testing
     end
 
-    CONCEPT_GENERATED_FILE = "spec/concepts/forum/comment_concept_spec.rb"
+
+    let(:generated_file) { "spec/concepts/forum/comment_concept_spec.rb" }
 
     it "creates widget spec" do
-      test.assert_file CONCEPT_GENERATED_FILE, t("require 'rails_helper'")
-      test.assert_file CONCEPT_GENERATED_FILE, t('describe Forum::Comment::Cell, type: :concept do')
-      test.assert_file CONCEPT_GENERATED_FILE, t('context \'concept rendering\' do')
-      test.assert_file CONCEPT_GENERATED_FILE, t('end')
+      test.assert_file generated_file, t("require 'rails_helper'")
+      test.assert_file generated_file, t('describe Forum::Comment::Cell, type: :cell do')
+      test.assert_file generated_file, t('context \'concept rendering\' do')
+      test.assert_file generated_file, t('end')
     end
 
     it 'creates display state' do
-      test.assert_file CONCEPT_GENERATED_FILE, t('context \'rendering display\' do')
-      test.assert_file CONCEPT_GENERATED_FILE, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:display) }')
-      # test.assert_file CONCEPT_GENERATED_FILE, t('it { is_expected.to include \'Forum::Comment#display\' }')
-      # test.assert_file CONCEPT_GENERATED_FILE, t('it { is_expected.to include \'Find me in app/cells/forum/comment/display.erb\' }')
-      test.assert_file CONCEPT_GENERATED_FILE, t('end')
+      test.assert_file generated_file, t('context \'rendering display\' do')
+      test.assert_file generated_file, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:display) }')
+      # test.assert_file generated_file, t('it { is_expected.to include \'Forum::Comment#display\' }')
+      # test.assert_file generated_file, t('it { is_expected.to include \'Find me in app/cells/forum/comment/display.erb\' }')
+      test.assert_file generated_file, t('end')
     end
 
     it 'creates form state' do
-      test.assert_file CONCEPT_GENERATED_FILE, t('context \'rendering form\' do')
-      test.assert_file CONCEPT_GENERATED_FILE, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:form) }')
-      # test.assert_file CONCEPT_GENERATED_FILE, t('it { is_expected.to include \'Forum::Comment#form\' }')
-      # test.assert_file CONCEPT_GENERATED_FILE, t('it { is_expected.to include \'Find me in app/cells/forum/comment/form.erb\' }')
-      test.assert_file CONCEPT_GENERATED_FILE, t('end')
+      test.assert_file generated_file, t('context \'rendering form\' do')
+      test.assert_file generated_file, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:form) }')
+      # test.assert_file generated_file, t('it { is_expected.to include \'Forum::Comment#form\' }')
+      # test.assert_file generated_file, t('it { is_expected.to include \'Find me in app/cells/forum/comment/form.erb\' }')
+      test.assert_file generated_file, t('end')
     end
   end
 end
