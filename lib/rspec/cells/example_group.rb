@@ -39,13 +39,23 @@ module RSpec
         # add Example::controller and ::controller_class.
         extend RSpec::Cells::ExampleGroup::Controller
         let (:controller_class) {  }
-        let (:controller) { controller_for(controller_class) }
+        let (:controller) { controller_for(controller_class, action, params) }
+        let (:action) { nil }
+        let (:params) { Hash.new }
       end
 
 
       module Controller
         def controller(name) # DSL for test, e.g. `controller SongsController`.
           let (:controller_class) { name }
+        end
+
+        def action(name)
+          let (:action) { name }
+        end
+
+        def params(&block)
+          let :params, &block
         end
       end
     end
