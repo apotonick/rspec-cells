@@ -1,17 +1,17 @@
 require "spec_helper"
-require "generators/rspec/cell_generator"
+require "generators/rspec/concept_generator"
 
-describe Rspec::Generators::CellGenerator do
+describe Rspec::Generators::ConceptGenerator do
   include RSpec::Rails::RailsExampleGroup
 
   attr_accessor :test_case, :test
 
-  CELL_DESTINATION_ROOT = File.expand_path("../../tmp", __FILE__)
+  CONCEPT_DESTINATION_ROOT = File.expand_path("../../tmp", __FILE__)
 
   before(:all) do
     test_case = Class.new(Rails::Generators::TestCase)
-    test_case.destination_root = CELL_DESTINATION_ROOT
-    test_case.generator_class = Rspec::Generators::CellGenerator
+    test_case.destination_root = CONCEPT_DESTINATION_ROOT
+    test_case.generator_class = Rspec::Generators::ConceptGenerator
     self.test = test_case.new :wow
   end
 
@@ -25,31 +25,31 @@ describe Rspec::Generators::CellGenerator do
     end
 
     after(:all) do
-      FileUtils.rm_rf(CELL_DESTINATION_ROOT) # Cleanup after we are done testing
+      FileUtils.rm_rf(CONCEPT_DESTINATION_ROOT) # Cleanup after we are done testing
       # Object.send(:remove_const, :"Capybara")
     end
 
     it "creates widget spec" do
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t("require 'rails_helper'")
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('RSpec.describe TwitterCell, type: :cell do')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('context \'cell rendering\' do')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('end')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t("require 'rails_helper'")
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('RSpec.describe Twitter::Cell, type: :cell do')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('context \'concept rendering\' do')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('end')
     end
 
     it 'creates display state' do
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('context \'rendering display\' do')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('subject { cell(:twitter, Twitter.new).call(:display) }')
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('it { is_expected.to have_selector(\'h1\', text: \'Twitter#display\') }')
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('it { is_expected.to have_selector(\'p\', text: \'Find me in app/cells/twitter/display.erb\') }')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('end')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('context \'rendering display\' do')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('subject { concept(\'twitter/cell\', Twitter.new).call(:display) }')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('it { is_expected.to have_selector(\'h1\', text: \'Twitter#display\') }')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('it { is_expected.to have_selector(\'p\', text: \'Find me in app/concepts/twitter/views/display.erb\') }')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('end')
     end
 
     it 'creates form state' do
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('context \'rendering form\' do')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('subject { cell(:twitter, Twitter.new).call(:form) }')
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('it { is_expected.to have_selector(\'h1\', text: \'Twitter#form\') }')
-      test.assert_file 'spec/cells/twitter_cell_spec.rb', t('it { is_expected.to have_selector(\'p\', text: \'Find me in app/cells/twitter/form.erb\') }')
-      test.assert_file "spec/cells/twitter_cell_spec.rb", t('end')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('context \'rendering form\' do')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('subject { concept(\'twitter/cell\', Twitter.new).call(:form) }')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('it { is_expected.to have_selector(\'h1\', text: \'Twitter#form\') }')
+      test.assert_file 'spec/concepts/twitter_concept_spec.rb', t('it { is_expected.to have_selector(\'p\', text: \'Find me in app/concepts/twitter/views/form.erb\') }')
+      test.assert_file "spec/concepts/twitter_concept_spec.rb", t('end')
     end
   end
 
@@ -59,7 +59,7 @@ describe Rspec::Generators::CellGenerator do
   #   end
 
   #   after(:all) do
-  #     FileUtils.rm_rf(CELL_DESTINATION_ROOT) # Cleanup after we are done testing
+  #     FileUtils.rm_rf(CONCEPT_DESTINATION_ROOT) # Cleanup after we are done testing
   #   end
 
   #   it "creates widget spec" do
@@ -95,21 +95,22 @@ describe Rspec::Generators::CellGenerator do
     end
 
     after(:all) do
-      FileUtils.rm_rf(CELL_DESTINATION_ROOT) # Cleanup after we are done testing
+      FileUtils.rm_rf(CONCEPT_DESTINATION_ROOT) # Cleanup after we are done testing
     end
 
-    let(:generated_file) {"spec/cells/forum/comment_cell_spec.rb"}
+
+    let(:generated_file) { "spec/concepts/forum/comment_concept_spec.rb" }
 
     it "creates widget spec" do
       test.assert_file generated_file, t("require 'rails_helper'")
-      test.assert_file generated_file, t('describe Forum::CommentCell, type: :cell do')
-      test.assert_file generated_file, t('context \'cell rendering\' do')
+      test.assert_file generated_file, t('describe Forum::Comment::Cell, type: :cell do')
+      test.assert_file generated_file, t('context \'concept rendering\' do')
       test.assert_file generated_file, t('end')
     end
 
     it 'creates display state' do
       test.assert_file generated_file, t('context \'rendering display\' do')
-      test.assert_file generated_file, t('subject { cell("forum/comment", Forum::Comment.new).call(:display) }')
+      test.assert_file generated_file, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:display) }')
       # test.assert_file generated_file, t('it { is_expected.to include \'Forum::Comment#display\' }')
       # test.assert_file generated_file, t('it { is_expected.to include \'Find me in app/cells/forum/comment/display.erb\' }')
       test.assert_file generated_file, t('end')
@@ -117,7 +118,7 @@ describe Rspec::Generators::CellGenerator do
 
     it 'creates form state' do
       test.assert_file generated_file, t('context \'rendering form\' do')
-      test.assert_file generated_file, t('subject { cell("forum/comment", Forum::Comment.new).call(:form) }')
+      test.assert_file generated_file, t('subject { concept("forum/comment/cell", Forum::Comment.new).call(:form) }')
       # test.assert_file generated_file, t('it { is_expected.to include \'Forum::Comment#form\' }')
       # test.assert_file generated_file, t('it { is_expected.to include \'Find me in app/cells/forum/comment/form.erb\' }')
       test.assert_file generated_file, t('end')

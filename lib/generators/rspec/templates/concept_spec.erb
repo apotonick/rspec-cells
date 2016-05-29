@@ -1,0 +1,24 @@
+require 'rails_helper'
+
+RSpec.describe <%= class_name %>::Cell, type: :cell do
+
+  context 'concept rendering' do
+  <%- actions.each_with_index do |state, index| -%>
+    context 'rendering <%= state %>' do
+      subject { concept(<%= concept_name %>, <%= class_name %>.new).call(:<%= state %>) }
+
+      <%- if defined?(::Capybara) -%>
+      it { is_expected.to have_selector('h1', text: '<%= class_name %>#<%= state %>') }
+      it { is_expected.to have_selector('p', text: 'Find me in app/concepts/<%= file_path %>/views/<%= state %>.<%= template_engine %>') }
+      <%- else -%>
+      it { is_expected.to include '<%= class_name %>#<%= state %>' }
+      it { is_expected.to include 'Find me in app/concepts/<%= file_path %>/views/<%= state %>.<%= template_engine %>' }
+      <%- end -%>
+    end
+    <%- unless index == actions.length - 1 -%>
+
+    <%- end -%>
+  <%- end -%>
+  end
+
+end
