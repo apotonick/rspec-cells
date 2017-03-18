@@ -4,6 +4,9 @@ require 'generators/rspec'
 # ensure that we can see the test-libraries like Capybara
 Bundler.require :test if Bundler
 
+# ensure that we can see the test-libraries like Capybara
+Bundler.require :test if Bundler
+
 module Rspec
   module Generators
     class CellGenerator < Base
