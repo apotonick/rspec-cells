@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/trailblazer/rspec-cells/issues",
-    "changelog_uri"     => "https://github.com/trailblazer/rspec-cells/blob/v#{s.version}/CHANGES.md",
+    "changelog_uri"     => "https://github.com/trailblazer/rspec-cells/blob/master/CHANGES.md",
     "documentation_uri" => "https://www.rubydoc.info/gems/rspec-cells/#{s.version}",
     "source_code_uri"   => "https://github.com/trailblazer/rspec-cells/tree/v#{s.version}",
     "wiki_uri"          => "https://github.com/trailblazer/rspec-cells/wiki",
