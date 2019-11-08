@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Nick Sutterer"]
   s.email       = ["apotonick@gmail.com"]
-  s.homepage    = "https://rubygems.org/gems/rspec-cells/versions/#{s.version}"
+  s.homepage    = "https://github.com/trailblazer/rspec-cells"
   s.summary     = %q{Spec your cells.}
   s.description = %q{Use render_cell in your specs.}
   s.license     = 'MIT'
